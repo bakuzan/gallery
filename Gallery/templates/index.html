@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Gallery of images generated for browsing."
+    />
+
+    <title>{{ title }} | Gallery</title>
+  </head>
+  <body>
+    <main class="gallery">
+      <header>
+        <h1 class="gallery__title">{{ title }}</h1>
+        <p class="gallery__description">{{ description }}</p>
+      </header>
+      {% if items %}
+      <div>
+        <ul class="grid">
+          {% for item in items %} {% include '_item.html' %} {% endfor %}
+        </ul>
+      </div>
+      {% endif %} {% if groups %}
+      <div>
+        <ul class="grid">
+          {% for group in groups %} {% include '_group.html' %} {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </main>
+    <footer class="footer">
+      Gallery generated from {{ location }} at {{ date }}
+    </footer>
+  </body>
+</html>
