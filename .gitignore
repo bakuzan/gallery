@@ -1,2 +1,7 @@
+# Environment + Config
 env
 config.txt
+
+# Output stuff
+__pycache__
+*_Gallery.html
