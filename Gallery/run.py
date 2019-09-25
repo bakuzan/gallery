@@ -1,17 +1,16 @@
 from os import listdir, path
-from jinja2 import Environment, FileSystemLoader
 import base64
 import datetime
 import timeit
 import imghdr
 
+from jinja.env import get_jinja_env
 from config import get_gallery_config
 from models import Item
 
 
 def get_gallery_template():
-    loader = FileSystemLoader('templates')
-    env = Environment(loader=loader)
+    env = get_jinja_env()
     return env.get_template('index.html')
 
 

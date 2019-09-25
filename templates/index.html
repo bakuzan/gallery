@@ -10,31 +10,16 @@
 
     <title>{{ title }} | Gallery</title>
     <style>
-      body, main {
-        min-height: 100vh;
-        font-size: 16px;
-        font-family: 'Lucida Console', 'Courier New', monospace;
-      }
-      .gallery__title {
-        margin: 8px 0;
-      }
-
-      .grid {
-        display: grid;
-        grid-auto-rows: 1fr;
-        grid-auto-columns: auto;
-        padding: 0 8px;
-        margin: 0;
-        list-style-type: none;
-      }
-      .item {
-        height: {{row_height}}px;
-      }
-
-      .footer {
-        padding: 16px 8px;
+      :root {
+        --row-height: {{row_height}}px;
       }
     </style>
+    <style>
+      {{ include_raw('../styles/index.css') }}
+    </style>
+    <script type="module">
+      {{ include_raw("../js/index.js") }}
+    </script>
   </head>
   <body>
     <main class="gallery">
