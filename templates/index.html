@@ -12,34 +12,34 @@
     <style>
       :root {
         --row-height: {{row_height}}px;
+        --background-colour: {{colours.background}};
+        --title-colour: {{colours.title}};
+        --primary-colour: {{colours.primary}};
       }
     </style>
     <style>
-      {{ include_raw('../styles/index.css') }}
+      {{ include_raw("styles/index.css") }}
     </style>
     <script type="module">
-      {{ include_raw("../js/index.js") }}
+      {{ include_raw("js/index.js") }}
     </script>
   </head>
   <body>
     <main class="gallery">
-      <header>
+      <header class="gallery__header">
         <h1 class="gallery__title">{{ title }}</h1>
-        <p class="gallery__description">{{ description }}</p>
       </header>
+      <div class="content">
       {% if items %}
-      <div>
-        <ul class="grid">
+        <ul class="list">
           {% for item in items %} {% include '_item.html' %} {% endfor %}
         </ul>
-      </div>
       {% endif %} {% if groups %}
-      <div>
-        <ul class="grid">
+        <ul class="list">
           {% for group in groups %} {% include '_group.html' %} {% endfor %}
         </ul>
-      </div>
       {% endif %}
+    </div>
     </main>
     <footer class="footer">
       Gallery generated from `{{ location }}` at {{ date }}

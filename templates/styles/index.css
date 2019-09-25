@@ -1,0 +1,45 @@
+body,
+main {
+  min-height: 100vh;
+  font-size: 16px;
+  font-family: 'Lucida Console', 'Courier New', monospace;
+  background-color: var(--background-colour);
+}
+
+.gallery__header {
+  position: fixed;
+  top: 0;
+  background-color: inherit;
+  width: 100%;
+}
+.gallery__title {
+  color: var(--title-colour);
+  padding: 8px 0;
+  margin: 0;
+}
+
+.content {
+  margin: 48px 0;
+}
+
+.list {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 0 8px;
+  margin: 0;
+  list-style-type: none;
+}
+
+.item {
+  height: var(--row-height);
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.item:hover {
+  border-color: var(--primary-colour);
+}
+
+.footer {
+  color: var(--title-colour);
+  padding: 16px 8px;
+}
