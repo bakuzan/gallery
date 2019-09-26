@@ -1,8 +1,14 @@
+
 [setup]
 location=
 title=
+# row_height default: 150px
 row_height=
+# recursive default: False
 recursive=
 
+# Optional
 [colours]
+background=
 primary=
+title=

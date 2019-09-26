@@ -130,22 +130,27 @@ function createGroupChangeHandler(direction) {
 function setupCycler(name, image, groupIndex, itemIndex) {
   updateCyclerState(true, name, image, groupIndex, itemIndex);
 
+  const onPrevGroup = createGroupChangeHandler(-1);
+  const onNextGroup = createGroupChangeHandler(1);
+  const onPrevImage = createImageChangeHandler(-1);
+  const onNextImage = createImageChangeHandler(1);
+
   const prevGroup = document.getElementById('prevGroup');
-  prevGroup.addEventListener('click', createGroupChangeHandler(-1));
+  prevGroup.addEventListener('click', onPrevGroup);
   const nextGroup = document.getElementById('nextGroup');
-  nextGroup.addEventListener('click', createGroupChangeHandler(1));
+  nextGroup.addEventListener('click', onNextGroup);
 
   const prevImage = document.getElementById('prevImage');
-  prevImage.addEventListener('click', createImageChangeHandler(-1));
+  prevImage.addEventListener('click', onPrevImage);
   const nextImage = document.getElementById('nextImage');
-  nextImage.addEventListener('click', createImageChangeHandler(1));
+  nextImage.addEventListener('click', onNextImage);
 
   function handleClose() {
     updateCyclerState(false);
-    prevGroup.removeEventListener('click', createGroupChangeHandler(-1));
-    nextGroup.removeEventListener('click', createGroupChangeHandler(1));
-    prevImage.removeEventListener('click', createImageChangeHandler(-1));
-    nextImage.removeEventListener('click', createImageChangeHandler(1));
+    prevGroup.removeEventListener('click', onPrevGroup);
+    nextGroup.removeEventListener('click', onNextGroup);
+    prevImage.removeEventListener('click', onPrevImage);
+    nextImage.removeEventListener('click', onNextImage);
     closeBtn.removeEventListener('click', handleClose);
   }
 

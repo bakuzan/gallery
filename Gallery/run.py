@@ -5,9 +5,10 @@ import timeit
 import imghdr
 
 from jinja.env import get_jinja_env
-from config import get_gallery_config
-from models import Group, Item
+from config import get_gallery_config, get_section
 from consts import DEFAULT_COLOURS
+from models import Group, Item
+from messaging import log, log_dict, log_replace_line
 
 
 def get_gallery_template():
@@ -17,7 +18,7 @@ def get_gallery_template():
 
 def get_item_from_file(filepath, filename):
     [name, ext] = filename.split(".")
-    prefix = "data:image/%s;base64," % ext
+    prefix = "data:image/{0};base64,".format(ext)
 
     with open(filepath, "rb") as image_file:
         raw_bytes = base64.b64encode(image_file.read())
@@ -26,10 +27,13 @@ def get_item_from_file(filepath, filename):
 
 
 def read_files(base_path, recursive):
+    log("Reading files {0}.".format(
+        "recursively" if recursive else "shallowly"))
     groups = []
 
     if recursive:
-        for subdir, dirs, files in os.walk(base_path):
+        for subdir, dirs, files in os.walk(base_path, followlinks=True):
+            log("Reading {0}...".format(subdir))
             group_name = subdir.replace(base_path, "")
             items = []
 
@@ -42,8 +46,10 @@ def read_files(base_path, recursive):
 
             g = Group(group_name, items)
             groups.append(g)
+            log_replace_line("Reading {0}...Done".format(subdir))
 
     else:
+        log("Reading {0}...".format(base_path))
         g = Group("")
         groups.append(g)
         files = os.listdir(base_path)
@@ -55,16 +61,21 @@ def read_files(base_path, recursive):
                 item = get_item_from_file(filepath, filename)
                 g.add(item)
 
+        log_replace_line("Reading {0}...Done".format(base_path))
+
     return [g for g in groups if len(g.items) > 0]
 
 
 def save_gallery(title, data):
+    log("Saving gallery {0}...".format(title))
+
     title = title.replace(" ", "_")
     here = os.path.dirname(__file__)
-    output_path = os.path.join(here, "../", "%s_Gallery.html" % title)
+    output_path = os.path.join(here, "../", "{0}_Gallery.html".format(title))
 
     with open(output_path, "w") as jin:
         jin.write(data)
+        log_replace_line("Saving gallery {0}...Done".format(title))
 
 
 if __name__ == "__main__":
@@ -76,9 +87,9 @@ if __name__ == "__main__":
     row_height = cfg.get("setup", "row_height", fallback=150)
     recursive = cfg.getboolean("setup", "recursive", fallback=False)
 
-    colours = cfg._sections["colours"]
-    colours = colours if colours is not None else DEFAULT_COLOURS
-    colours = {**DEFAULT_COLOURS, **colours}
+    colours = get_section(cfg, 'colours', DEFAULT_COLOURS)
+
+    log_dict("Generating gallery with config:", cfg._sections)
 
     groups = read_files(gallery_path, recursive)
 
@@ -94,4 +105,4 @@ if __name__ == "__main__":
 
     end_time = timeit.default_timer()
     time_taken = end_time - start_time
-    print("Generated %s gallery in %s seconds" % (title, time_taken))
+    log("Generated {0} gallery in {1} seconds".format(title, time_taken))
