@@ -12,7 +12,8 @@ main {
   background-color: inherit;
   width: 100%;
 }
-.gallery__title {
+.gallery__title,
+.group__title {
   color: var(--title-colour);
   padding: 8px 0;
   margin: 0;
@@ -28,6 +29,10 @@ main {
   padding: 0 8px;
   margin: 0;
   list-style-type: none;
+}
+
+.group {
+  margin: 10px 0;
 }
 
 .item {

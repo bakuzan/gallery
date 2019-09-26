@@ -30,11 +30,7 @@
         <h1 class="gallery__title">{{ title }}</h1>
       </header>
       <div class="content">
-      {% if items %}
-        <ul class="list">
-          {% for item in items %} {% include '_item.html' %} {% endfor %}
-        </ul>
-      {% endif %} {% if groups %}
+      {% if groups %}
         <ul class="list">
           {% for group in groups %} {% include '_group.html' %} {% endfor %}
         </ul>

@@ -1,6 +1,8 @@
 <li class="group">
+  {% if group.name != "" %}
   <h2 class="group__title">{{ group.name }}</h2>
-  <ul class="grid group__grid">
-    {% for item in items %} {% include '_item.html' %} {% endfor %}
+  {% endif %}
+  <ul class="list group__list">
+    {% for item in group.items %} {% include '_item.html' %} {% endfor %}
   </ul>
 </li>
