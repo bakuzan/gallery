@@ -19,6 +19,7 @@
     </style>
     <style>
       {{ include_raw("styles/index.css") }}
+      {{ include_raw("styles/cycler.css") }}
     </style>
     <script type="module">
       {{ include_raw("js/index.js") }}
@@ -26,16 +27,17 @@
   </head>
   <body>
     <main class="gallery">
-      <header class="gallery__header">
+      <header id="header" class="gallery__header">
         <h1 class="gallery__title">{{ title }}</h1>
       </header>
-      <div class="content">
-      {% if groups %}
-        <ul class="list">
-          {% for group in groups %} {% include '_group.html' %} {% endfor %}
-        </ul>
-      {% endif %}
-    </div>
+      <div id="content" class="content">
+        {% if groups %}
+          <ul class="list">
+            {% for gIdx, group in enumerate(groups) %} {% include '_group.html' %} {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+      {% include '_cycler.html' %}
     </main>
     <footer class="footer">
       Gallery generated from `{{ location }}` at {{ date }}

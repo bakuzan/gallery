@@ -11,11 +11,16 @@ main {
   top: 0;
   background-color: inherit;
   width: 100%;
+  margin: 0 -8px;
 }
+.gallery__title {
+  padding: 8px;
+  box-shadow: 1px 1px 1px 1px var(--primary-colour);
+}
+
 .gallery__title,
 .group__title {
   color: var(--title-colour);
-  padding: 8px 0;
   margin: 0;
 }
 
@@ -32,16 +37,28 @@ main {
 }
 
 .group {
+  width: 100%;
   margin: 10px 0;
+}
+.group__title {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--primary-colour);
+  margin-bottom: 8px;
 }
 
 .item {
   height: var(--row-height);
   border: 1px solid transparent;
-  cursor: pointer;
 }
 .item:hover {
   border-color: var(--primary-colour);
+}
+
+.item__button {
+  background: none;
+  padding: 0;
+  border: none;
+  cursor: pointer;
 }
 
 .footer {

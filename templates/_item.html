@@ -1,8 +1,12 @@
-<li class="item" data-group="{{group.name}}">
-  <img
-    class="image"
-    src="{{ item.image }}"
-    alt="{{ item.name }}"
-    height="{{ row_height }}"
-  />
+<li class="item">
+  <button class="item__button" type="button">
+    <img
+      class="image"
+      src="{{ item.image }}"
+      alt="{{ item.name }}"
+      height="{{ row_height }}"
+      data-group="{{ gIdx }}"
+      data-number="{{ idx }}"
+    />
+  </button>
 </li>

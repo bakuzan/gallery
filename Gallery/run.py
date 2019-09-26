@@ -31,15 +31,17 @@ def read_files(base_path, recursive):
     if recursive:
         for subdir, dirs, files in os.walk(base_path):
             group_name = subdir.replace(base_path, "")
-            g = Group(group_name)
-            groups.append(g)
+            items = []
 
             for filename in files:
                 filepath = subdir + os.sep + filename
 
                 if imghdr.what(filepath):
                     item = get_item_from_file(filepath, filename)
-                    g.add(item)
+                    items.append(item)
+
+            g = Group(group_name, items)
+            groups.append(g)
 
     else:
         g = Group("")
@@ -53,7 +55,7 @@ def read_files(base_path, recursive):
                 item = get_item_from_file(filepath, filename)
                 g.add(item)
 
-    return groups
+    return [g for g in groups if len(g.items) > 0]
 
 
 def save_gallery(title, data):

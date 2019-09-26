@@ -1,0 +1,43 @@
+<section id="cycler" class="cycler" aria-hidden="true">
+  <header class="cycler__header">
+    <h2 id="cycler-title" class="cycler__title"></h2>
+    <button
+      id="prevGroup"
+      type="button"
+      class="cycler__button cycler__button--prev spaced"
+      aria-label="Previous group"
+    ></button>
+    <button
+      id="nextGroup"
+      type="button"
+      class="cycler__button cycler__button--next spaced"
+      aria-label="Next group"
+    ></button>
+    <button
+      id="close"
+      type="button"
+      class="close spaced"
+      aria-label="Close cycler"
+    ></button>
+  </header>
+  <div class="cycler__view">
+    <button
+      id="prevImage"
+      type="button"
+      class="cycler__button cycler__button--prev"
+      aria-label="Previous image"
+    ></button>
+    <img
+      id="cycler-image"
+      src=""
+      alt=""
+      style="max-height: calc(100vh - var(--header-height) - 16px);max-width: calc(100vw - 100px); margin: auto;"
+    />
+    <button
+      id="nextImage"
+      type="button"
+      class="cycler__button cycler__button--next"
+      aria-label="Next image"
+    ></button>
+  </div>
+</section>
