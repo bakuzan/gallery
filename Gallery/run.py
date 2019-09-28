@@ -3,6 +3,7 @@ import base64
 import datetime
 import timeit
 import imghdr
+from pathlib import Path
 
 from jinja.env import get_jinja_env
 from config import get_gallery_config, get_section
@@ -14,6 +15,10 @@ from messaging import log, log_dict, log_replace_line
 def get_gallery_template():
     env = get_jinja_env()
     return env.get_template('index.html')
+
+
+def is_image(filepath):
+    return os.path.isfile(filepath) and imghdr.what(filepath)
 
 
 def get_item_from_file(filepath, filename):
@@ -40,7 +45,7 @@ def read_files(base_path, recursive):
             for filename in files:
                 filepath = subdir + os.sep + filename
 
-                if imghdr.what(filepath):
+                if is_image(filepath):
                     item = get_item_from_file(filepath, filename)
                     items.append(item)
 
@@ -57,7 +62,7 @@ def read_files(base_path, recursive):
         for filename in files:
             filepath = base_path + os.sep + filename
 
-            if imghdr.what(filepath):
+            if is_image(filepath):
                 item = get_item_from_file(filepath, filename)
                 g.add(item)
 
