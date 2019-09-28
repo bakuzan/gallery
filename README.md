@@ -2,7 +2,9 @@
 
 Generate an image gallery from given directory.
 
-Work in progress. Requirements not decided.
+### Notes
+
+Doesn't work for shortcut (.lnk) files
 
 ## Usage
 
