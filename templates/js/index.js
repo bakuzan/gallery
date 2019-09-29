@@ -16,7 +16,6 @@ const getItemImage = (groupIndex, itemIndex) =>
  * @param {string} itemIndex
  */
 function updateImage(name, image, groupIndex, itemIndex) {
-  console.log(name, image, groupIndex, itemIndex);
   const imgElement = getCyclerImage();
   imgElement.src = image;
   imgElement.alt = name;
@@ -66,7 +65,9 @@ function updateCyclerState(
     `.group__title[${DATA_GROUP}='${groupIndex}']`
   );
 
-  const groupTitle = groupTitleElement ? groupTitleElement.textContent : '';
+  const groupTitle = groupTitleElement
+    ? groupTitleElement.firstElementChild.textContent
+    : '';
 
   const cyclerTitle = document.getElementById('cycler-title');
   cyclerTitle.textContent = showCycler
@@ -79,43 +80,51 @@ function updateCyclerState(
 }
 
 /**
- * Create event listener for image changing button
+ * Create event listener for changer button
  *
  * @param {number} direction
  */
-function createImageChangeHandler(direction) {
+function createChangeHandler(getIndexes) {
   return () => {
     const imgElement = getCyclerImage();
     const gIdx = imgElement.getAttribute(DATA_GROUP);
     const idx = imgElement.getAttribute(DATA_NUMBER);
-    const groupItems = document.querySelectorAll(
-      `.group__list[${DATA_GROUP}='${gIdx}'] .item`
-    );
-    const lastIdx = groupItems.length - 1;
+    const [newGroupIndex, newItemIndex] = getIndexes(gIdx, idx);
+    const item = getItemImage(newGroupIndex, newItemIndex);
 
-    let newIdx = Number(idx) + direction;
-    newIdx = newIdx < 0 ? lastIdx : newIdx > lastIdx ? 0 : newIdx;
-
-    const item = getItemImage(gIdx, newIdx);
-    updateCyclerState(true, item.alt, item.src, gIdx, newIdx);
+    updateCyclerState(true, item.alt, item.src, newGroupIndex, newItemIndex);
   };
 }
 
 /**
- * Create event listener for group changing button
+ * Create index generator for next group selection
  *
  * @param {number} direction
  */
-function createGroupChangeHandler(direction) {
-  return () => {
-    const imgElement = getCyclerImage();
-    const gIdx = imgElement.getAttribute(DATA_GROUP);
+function getNewGroupIndex(direction) {
+  return (gIdx) => {
     const lastGroupIdx = document.querySelectorAll('.group').length - 1;
+
     let newGIdx = Number(gIdx) + direction;
     newGIdx = newGIdx < 0 ? lastGroupIdx : newGIdx > lastGroupIdx ? 0 : newGIdx;
+    return [newGIdx, 0];
+  };
+}
 
-    const item = getItemImage(newGIdx, 0);
-    updateCyclerState(true, item.alt, item.src, newGIdx, 0);
+/**
+ * Create index generator for next item selection
+ *
+ * @param {number} direction
+ */
+function getNewItemIndex(direction) {
+  return (gIdx, idx) => {
+    const lastIdx =
+      document.querySelectorAll(`.group__list[${DATA_GROUP}='${gIdx}'] .item`)
+        .length - 1;
+
+    let newIdx = Number(idx) + direction;
+    newIdx = newIdx < 0 ? lastIdx : newIdx > lastIdx ? 0 : newIdx;
+    return [gIdx, newIdx];
   };
 }
 
@@ -130,10 +139,10 @@ function createGroupChangeHandler(direction) {
 function setupCycler(name, image, groupIndex, itemIndex) {
   updateCyclerState(true, name, image, groupIndex, itemIndex);
 
-  const onPrevGroup = createGroupChangeHandler(-1);
-  const onNextGroup = createGroupChangeHandler(1);
-  const onPrevImage = createImageChangeHandler(-1);
-  const onNextImage = createImageChangeHandler(1);
+  const onPrevGroup = createChangeHandler(getNewGroupIndex(-1));
+  const onNextGroup = createChangeHandler(getNewGroupIndex(1));
+  const onPrevImage = createChangeHandler(getNewItemIndex(-1));
+  const onNextImage = createChangeHandler(getNewItemIndex(1));
 
   const prevGroup = document.getElementById('prevGroup');
   prevGroup.addEventListener('click', onPrevGroup);
@@ -177,9 +186,7 @@ function onImageClick(event) {
  * Page setup
  */
 function setup() {
-  const buttons = document.querySelectorAll('.item__button');
-
-  Array.from(buttons).forEach((btn) =>
+  Array.from(document.querySelectorAll('.item__button')).forEach((btn) =>
     btn.addEventListener('click', onImageClick)
   );
 }

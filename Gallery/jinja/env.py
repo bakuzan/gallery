@@ -16,4 +16,5 @@ def get_jinja_env():
     env.globals['include_raw'] = include_raw(env)
     env.globals['selector_safe'] = selector_safe
     env.globals['enumerate'] = enumerate
+    env.globals['len'] = len
     return env

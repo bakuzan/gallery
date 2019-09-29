@@ -41,6 +41,8 @@ main {
   margin: 10px 0;
 }
 .group__title {
+  display: flex;
+  flex: 1;
   padding: 8px 0;
   border-bottom: 1px solid var(--primary-colour);
   margin-bottom: 8px;

@@ -1,6 +1,9 @@
 <li class="group">
   {% if group.name != "" %}
-  <h2 class="group__title" data-group="{{ gIdx }}">{{ group.name }}</h2>
+  <h2 class="group__title" data-group="{{ gIdx }}">
+    <div>{{ group.name }}</div>
+    <div>({{ len(group.items) }})</div>
+  </h2>
   {% endif %}
   <ul class="list group__list" data-group="{{ gIdx }}">
     {% for idx, item in enumerate(group.items) %} {% include '_item.html' %} {% endfor %}

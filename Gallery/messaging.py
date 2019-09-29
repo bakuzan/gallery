@@ -7,10 +7,10 @@ def log(message):
 
 
 def log_dict(message, d):
-    print(message)
-    print(json.dumps(d, sort_keys=False, indent=2), flush=True)
+    log(message)
+    log(json.dumps(d, sort_keys=False, indent=2))
 
 
 def log_replace_line(message):
-    sys.stdout.write("\033[F")
+    sys.stdout.write("\033[F\033[K")
     print(message, flush=True)
